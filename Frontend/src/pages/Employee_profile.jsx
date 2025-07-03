@@ -166,28 +166,6 @@ export default function Employee_profile() {
               Back to Dashboard
             </button>
             <button
-              onClick={() => navigate('/Employee_View_ticket', {
-                state: {
-                  employeeId: employeeData.employeeId
-                }
-              })}
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-            >
-              View My Ticket
-            </button>
-            <button
-              onClick={() => navigate('/Employee_ticket', {
-                state: {
-                  fullName: `${employeeData.firstName} ${employeeData.lastName}`,
-                  email: employeeData.email,
-                  employeeId: employeeData.employeeId
-                }
-              })}
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-            >
-              Send Ticket
-            </button>
-            <button
               onClick={handleDownloadSlip}
               className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
