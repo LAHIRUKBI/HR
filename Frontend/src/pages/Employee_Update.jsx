@@ -17,6 +17,7 @@ export default function Employee_Update() {
     hireDate: '',
     salary: 0
   });
+  const [workingDays, setWorkingDays] = useState(0);
   const [loading, setLoading] = useState(true);
 
   // Fetch employee data
@@ -35,6 +36,8 @@ export default function Employee_Update() {
         };
         
         setEmployee(formattedData);
+        // Initialize working days based on current salary
+        setWorkingDays(Math.round(data.salary / 1500));
       } catch (error) {
         toast.error(error.message);
       } finally {
@@ -65,6 +68,20 @@ export default function Employee_Update() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleWorkingDaysChange = (e) => {
+    const days = parseInt(e.target.value) || 0;
+    setWorkingDays(days);
+  };
+
+  const calculateSalary = () => {
+    const calculatedSalary = workingDays * 1500;
+    setEmployee(prev => ({
+      ...prev,
+      salary: calculatedSalary
+    }));
+    toast.success(`Salary calculated: $${calculatedSalary} for ${workingDays} days`);
   };
 
   const handleSubmit = async (e) => {
@@ -252,30 +269,55 @@ export default function Employee_Update() {
             </div>
           </div>
 
-          <div className="md:col-span-2">
-            <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
-              Salary *
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span className="text-gray-500 sm:text-sm">$</span>
+          {/* Salary Calculation Section */}
+          <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+            <h3 className="text-lg font-medium text-gray-800 mb-3">Salary Calculation</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label htmlFor="workingDays" className="block text-sm font-medium text-gray-700 mb-1">
+                  Working Days *
+                </label>
+                <input
+                  type="number"
+                  id="workingDays"
+                  name="workingDays"
+                  value={workingDays}
+                  onChange={handleWorkingDaysChange}
+                  min="0"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Number of days"
+                />
               </div>
-              <input
-                type="number"
-                id="salary"
-                name="salary"
-                value={employee.salary}
-                onChange={handleChange}
-                required
-                min="0"
-                step="0.01"
-                className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="0.00"
-              />
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <span className="text-gray-500 sm:text-sm">USD</span>
+              <div className="flex items-end">
+                <button
+                  type="button"
+                  onClick={calculateSalary}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  Calculate Salary
+                </button>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Calculated Salary
+                </label>
+                <div className="relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span className="text-gray-500 sm:text-sm">$</span>
+                  </div>
+                  <input
+                    type="text"
+                    readOnly
+                    value={employee.salary.toFixed(2)}
+                    className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md bg-gray-100"
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <span className="text-gray-500 sm:text-sm">USD</span>
+                  </div>
+                </div>
               </div>
             </div>
+            <p className="mt-2 text-sm text-gray-600">Daily rate: $1500 per day</p>
           </div>
 
           <div className="mt-8 flex justify-end space-x-3">
