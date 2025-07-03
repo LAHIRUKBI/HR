@@ -25,17 +25,31 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentRepository.findAll());
     }
 
-    // Get single department by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getDepartmentById(@PathVariable String id) {
-        Optional<DepartmentModel> department = departmentRepository.findById(id);
-        return department.map(ResponseEntity::ok)
-                         .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
-    // Create new department
-    @PostMapping
-    public ResponseEntity<?> createDepartment(@RequestBody DepartmentModel department) {
+// Get single department by code
+@GetMapping("/{id}")
+public ResponseEntity<?> getDepartmentById(@PathVariable String id) {
+    System.out.println("Received request for department code: " + id);
+    
+    if (id == null || id.isEmpty()) {
+        System.out.println("Invalid code received");
+        return ResponseEntity.badRequest().body("Department code cannot be empty");
+    }
+    
+    DepartmentModel department = departmentRepository.findByCode(id);
+    
+    if (department != null) {
+        System.out.println("Found department: " + department.getName());
+        return ResponseEntity.ok(department);
+    } else {
+        System.out.println("No department found with code: " + id);
+        return ResponseEntity.notFound().build();
+    }
+}
+
+// Create new department
+@PostMapping
+public ResponseEntity<?> createDepartment(@RequestBody DepartmentModel department) {
         Map<String, Object> response = new HashMap<>();
         
         try {
@@ -73,50 +87,54 @@ public class DepartmentController {
         }
     }
 
-    // Update department
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateDepartment(@PathVariable String id, @RequestBody DepartmentModel departmentDetails) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            Optional<DepartmentModel> departmentOptional = departmentRepository.findById(id);
-            if (!departmentOptional.isPresent()) {
-                return ResponseEntity.notFound().build();
-            }
 
-            DepartmentModel department = departmentOptional.get();
-            department.setName(departmentDetails.getName());
-            department.setCode(departmentDetails.getCode());
-            department.setManagerId(departmentDetails.getManagerId());
-            department.setLocation(departmentDetails.getLocation());
-            department.setDescription(departmentDetails.getDescription());
-            department.setEmployeeIds(departmentDetails.getEmployeeIds());
-            department.setBudget(departmentDetails.getBudget());
-
-            DepartmentModel updatedDepartment = departmentRepository.save(department);
-            response.put("message", "Department updated successfully");
-            response.put("department", updatedDepartment);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            response.put("error", "Internal server error: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(response);
+// Update department
+@PutMapping("/{code}")
+public ResponseEntity<?> updateDepartment(@PathVariable String code, @RequestBody DepartmentModel departmentDetails) {
+    Map<String, Object> response = new HashMap<>();
+    try {
+        DepartmentModel department = departmentRepository.findByCode(code);
+        if (department == null) {
+            return ResponseEntity.notFound().build();
         }
-    }
 
-    // Delete department
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteDepartment(@PathVariable String id) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            if (!departmentRepository.existsById(id)) {
-                return ResponseEntity.notFound().build();
-            }
-            
-            departmentRepository.deleteById(id);
-            response.put("message", "Department deleted successfully");
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            response.put("error", "Internal server error: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(response);
-        }
+        department.setName(departmentDetails.getName());
+        department.setCode(departmentDetails.getCode());
+        department.setManagerId(departmentDetails.getManagerId());
+        department.setLocation(departmentDetails.getLocation());
+        department.setDescription(departmentDetails.getDescription());
+        department.setEmployeeIds(departmentDetails.getEmployeeIds());
+        department.setBudget(departmentDetails.getBudget());
+
+        DepartmentModel updatedDepartment = departmentRepository.save(department);
+        response.put("message", "Department updated successfully");
+        response.put("department", updatedDepartment);
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        response.put("error", "Internal server error: " + e.getMessage());
+        return ResponseEntity.internalServerError().body(response);
     }
+}
+
+
+// Delete department
+@DeleteMapping("/{code}")
+public ResponseEntity<?> deleteDepartment(@PathVariable String code) {
+    Map<String, Object> response = new HashMap<>();
+    try {
+        DepartmentModel department = departmentRepository.findByCode(code);
+        if (department == null) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        departmentRepository.delete(department);
+        response.put("message", "Department deleted successfully");
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        response.put("error", "Internal server error: " + e.getMessage());
+        return ResponseEntity.internalServerError().body(response);
+    }
+}
+
+    
 }
