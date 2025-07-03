@@ -115,4 +115,58 @@ public ResponseEntity<?> createEmployee(@RequestBody EmployeeModel employee) {
             return ResponseEntity.internalServerError().body(response);
         }
     }
+
+
+
+
+@PostMapping("/login")
+public ResponseEntity<?> loginEmployee(@RequestBody Map<String, String> credentials) {
+    Map<String, Object> response = new HashMap<>();
+    
+    try {
+        String email = credentials.get("email");
+        String employeeId = credentials.get("employeeId");
+        
+        if (email == null || email.isEmpty() || employeeId == null || employeeId.isEmpty()) {
+            response.put("error", "Email and Employee ID are required");
+            return ResponseEntity.badRequest().body(response);
+        }
+        
+        // Use Optional to handle null cases more gracefully
+        Optional<EmployeeModel> employeeOpt = Optional.ofNullable(employeeRepository.findByEmail(email));
+        
+        if (!employeeOpt.isPresent()) {
+            response.put("error", "Employee not found with this email");
+            return ResponseEntity.status(404).body(response);
+        }
+        
+        EmployeeModel employee = employeeOpt.get();
+        
+        if (!employee.getEmployeeId().equals(employeeId)) {
+            response.put("error", "Invalid Employee ID");
+            return ResponseEntity.status(401).body(response);
+        }
+        
+        // Don't include sensitive information in the response
+        EmployeeModel responseEmployee = new EmployeeModel();
+        responseEmployee.setId(employee.getId());
+        responseEmployee.setFirstName(employee.getFirstName());
+        responseEmployee.setLastName(employee.getLastName());
+        responseEmployee.setDepartment(employee.getDepartment());
+        responseEmployee.setEmployeeId(employee.getEmployeeId());
+        // Exclude sensitive data like salary, etc.
+        
+        response.put("message", "Login successful");
+        response.put("employee", responseEmployee);
+        return ResponseEntity.ok(response);
+        
+    } catch (Exception e) {
+        // Log the full error for debugging
+        System.err.println("Login error: " + e.getMessage());
+        e.printStackTrace();
+        
+        response.put("error", "Internal server error during login");
+        return ResponseEntity.internalServerError().body(response);
+    }
+}
 }
