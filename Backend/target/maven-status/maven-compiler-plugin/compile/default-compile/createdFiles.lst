@@ -1,7 +1,4 @@
 Backend\controller\EmployeeController.class
 Backend\repository\EmployeeRepository.class
-Backend\model\TicketModel.class
 Backend\BackendApplication.class
 Backend\model\EmployeeModel.class
-Backend\controller\TicketController.class
-Backend\repository\TicketRepository.class

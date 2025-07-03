@@ -13,7 +13,7 @@ export default function Admin() {
   };
 
   const handleDepartmentsClick = () => {
-    navigate('/departments');
+    navigate('/DepartmentForm');
   };
 
   return (
