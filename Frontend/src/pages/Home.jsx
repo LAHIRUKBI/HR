@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { FaBuilding, FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
 
 export default function Home() {
+  const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/departments');
+        // Get top 3 departments with highest budgets
+        const sortedDepts = response.data.sort((a, b) => b.budget - a.budget).slice(0, 3);
+        setDepartments(sortedDepts);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching departments:', err);
+        setLoading(false);
+      }
+    };
+    fetchDepartments();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-blue-600 text-white py-20 px-4 sm:px-6 lg:px-8">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Welcome to HRPro</h1>
-          <p className="text-xl md:text-2xl mb-8">Your complete HR Management Solution</p>
+          <p className="text-xl md:text-2xl mb-8">Empowering Your Organization's Success</p>
           <div className="space-x-4">
             <Link 
               to="/employees" 
@@ -26,8 +47,56 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Featured Departments Section */}
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">Our Premier Departments</h2>
+          <p className="text-xl text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+            These departments represent the pillars of our organization's success
+          </p>
+          
+          {loading ? (
+            <div className="text-center py-8">Loading departments...</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {departments.map((dept, index) => (
+                <div 
+                  key={dept._id} 
+                  className={`bg-gradient-to-br rounded-xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-105 ${index % 3 === 0 ? 'from-blue-50 to-blue-100' : index % 3 === 1 ? 'from-purple-50 to-purple-100' : 'from-teal-50 to-teal-100'}`}
+                >
+                  <div className="p-6">
+                    <div className="flex items-center mb-4">
+                      <div className={`p-3 rounded-full ${index % 3 === 0 ? 'bg-blue-100 text-blue-600' : index % 3 === 1 ? 'bg-purple-100 text-purple-600' : 'bg-teal-100 text-teal-600'}`}>
+                        <FaBuilding className="text-2xl" />
+                      </div>
+                      <h3 className="text-2xl font-bold ml-3 text-gray-800">{dept.name}</h3>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center">
+                        <FaMapMarkerAlt className={`mr-2 ${index % 3 === 0 ? 'text-blue-500' : index % 3 === 1 ? 'text-purple-500' : 'text-teal-500'}`} />
+                        <span className="text-gray-700">{dept.location || 'Global'}</span>
+                      </div>
+                      
+                      <div className="flex items-center">
+                        <FaMoneyBillWave className={`mr-2 ${index % 3 === 0 ? 'text-blue-500' : index % 3 === 1 ? 'text-purple-500' : 'text-teal-500'}`} />
+                        <span className="text-gray-700">Budget: <span className="font-bold">${dept.budget?.toLocaleString() || '0'}</span></span>
+                      </div>
+                      
+                      {dept.description && (
+                        <p className="text-gray-600 mt-3 italic">"{dept.description}"</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Features Section */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Key Features</h2>
           
@@ -68,29 +137,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="bg-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-blue-600">100+</div>
-              <div className="text-gray-600 mt-2">Employees</div>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-blue-600">10+</div>
-              <div className="text-gray-600 mt-2">Departments</div>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-blue-600">24/7</div>
-              <div className="text-gray-600 mt-2">Support</div>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <div className="text-3xl font-bold text-blue-600">99%</div>
-              <div className="text-gray-600 mt-2">Satisfaction</div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Call to Action */}
       <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
