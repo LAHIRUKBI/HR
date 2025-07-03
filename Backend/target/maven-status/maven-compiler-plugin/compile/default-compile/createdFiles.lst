@@ -1,0 +1,8 @@
+Backend\repository\UserRepository.class
+Backend\BackendApplication.class
+Backend\repository\LearRepository.class
+Backend\model\LearModel.class
+Backend\controller\GoogleAuthController.class
+Backend\model\User.class
+Backend\config\WebConfig.class
+Backend\controller\LearController.class
