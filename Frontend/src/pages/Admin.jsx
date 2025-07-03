@@ -8,6 +8,10 @@ export default function Admin() {
     navigate('/employees');
   };
 
+  const handleViewEmployeesClick = () => {
+    navigate('/Employees_View');
+  };
+
   const handleDepartmentsClick = () => {
     navigate('/departments');
   };
@@ -36,6 +40,15 @@ export default function Admin() {
               <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clipRule="evenodd" />
             </svg>
             Manage Departments
+          </button>
+          <button
+            onClick={handleViewEmployeesClick}
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg shadow-sm transition duration-200 flex items-center justify-center"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clipRule="evenodd" />
+            </svg>
+            View Employees
           </button>
         </div>
       </div>
