@@ -8,6 +8,7 @@ import Role from './pages/Role';
 import Admin from './pages/Admin';
 import Employees from './pages/Employees';
 import Employees_View from './pages/Employees_View';
+import Employee_Update from './pages/Employee_Update';
 
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/Admin" element={<Admin />} />
         <Route path="/Employees" element={<Employees />} />
         <Route path="/Employees_View" element={<Employees_View />} />
+        <Route path="/employees/edit/:id" element={<Employee_Update />} />
       </Routes>
       <Footer />
     </BrowserRouter>
