@@ -12,6 +12,8 @@ import Employee_Update from './pages/Employee_Update';
 import Sign_in from './pages/Sign_in';
 import Employee_profile from './pages/Employee_profile';
 import DepartmentForm from './pages/DepartmentForm';
+import DepartmentList from './pages/DepartmentList';
+import DepartmentDetail from './pages/DepartmentDetail';
 
 
 export default function App() {
@@ -31,6 +33,9 @@ export default function App() {
         <Route path="/Employee_profile" element={<Employee_profile />} />
 
         <Route path="/DepartmentForm" element={<DepartmentForm />} />
+        <Route path="/DepartmentList" element={<DepartmentList />} />
+        <Route path="/departments/:id" element={<DepartmentDetail />} />
+        <Route path="/departments/edit/:id" element={<DepartmentForm />} />
 
       </Routes>
       <Footer />
