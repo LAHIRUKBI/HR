@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,12 +13,9 @@ export default function Navigation() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in when component mounts
     const employee = JSON.parse(localStorage.getItem('employee'));
     if (employee) {
       setIsLoggedIn(true);
-      // Since we don't store email in localStorage, we might need to adjust this
-      // For now, I'll use employeeId as a placeholder
       setUserEmail(employee.employeeId);
     }
   }, []);
@@ -74,7 +70,7 @@ export default function Navigation() {
                   Dashboard
                 </Link>
                 <Link 
-                  to="/employees" 
+                  to="/emplo" 
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Employees
@@ -98,19 +94,19 @@ export default function Navigation() {
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
               {isLoggedIn ? (
                 <div className="flex items-center">
-    <button 
-      onClick={() => navigate('/Employee_profile')}
-      className="mr-4 text-sm font-medium text-gray-700 hover:text-blue-600 cursor-pointer"
-    >
-      {userEmail}
-    </button>
-    <button
-      onClick={handleLogout}
-      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-    >
-      Logout
-    </button>
-  </div>
+                  <button 
+                    onClick={() => navigate('/Employee_profile')}
+                    className="mr-4 text-sm font-medium text-gray-700 hover:text-blue-600 cursor-pointer"
+                  >
+                    {userEmail}
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  >
+                    Logout
+                  </button>
+                </div>
               ) : (
                 <button
                   onClick={handleLoginClick}
@@ -120,69 +116,6 @@ export default function Navigation() {
                 </button>
               )}
             </div>
-
-            {/* Mobile menu button */}
-            <div className="-mr-2 flex items-center sm:hidden">
-              <button 
-                type="button" 
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        <div className="sm:hidden">
-          <div className="pt-2 pb-3 space-y-1">
-            <Link 
-              to="/" 
-              className="bg-blue-50 border-blue-500 text-blue-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
-            >
-              Dashboard
-            </Link>
-            <Link 
-              to="/employees" 
-              className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
-            >
-              Employees
-            </Link>
-            <Link 
-              to="/departments" 
-              className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
-            >
-              Departments
-            </Link>
-            <button
-              onClick={handleAdminClick}
-              className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left"
-            >
-              Admin
-            </button>
-            {isLoggedIn ? (
-              <>
-                <div className="px-4 py-2 text-sm text-gray-700">
-                  Logged in as: {userEmail}
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <button
-                onClick={handleLoginClick}
-                className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left"
-              >
-                Login
-              </button>
-            )}
           </div>
         </div>
       </nav>
