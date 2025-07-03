@@ -14,7 +14,8 @@ export default function Employee_Update() {
     employeeId: '',
     email: '',
     phoneNumber: '',
-    hireDate: ''
+    hireDate: '',
+    salary: 0
   });
   const [loading, setLoading] = useState(true);
 
@@ -230,6 +231,32 @@ export default function Employee_Update() {
               />
             </div>
           </div>
+
+          <div className="md:col-span-2">
+  <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
+    Salary *
+  </label>
+  <div className="relative rounded-md shadow-sm">
+    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <span className="text-gray-500 sm:text-sm">$</span>
+    </div>
+    <input
+      type="number"
+      id="salary"
+      name="salary"
+      value={employee.salary}
+      onChange={handleChange}
+      required
+      min="0"
+      step="0.01"
+      className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="0.00"
+    />
+    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+      <span className="text-gray-500 sm:text-sm">USD</span>
+    </div>
+  </div>
+</div>
 
           <div className="mt-8 flex justify-end space-x-3">
             <button
