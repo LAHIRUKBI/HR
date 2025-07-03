@@ -12,10 +12,10 @@ export default function Employees() {
     employeeId: '',
     email: '',
     phoneNumber: '',
-    position: '',
-    salary: '',
     hireDate: ''
   });
+
+  const [phoneError, setPhoneError] = useState('');
 
   const departments = [
     'Human Resources',
@@ -30,13 +30,41 @@ export default function Employees() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Special handling for phone number
+    if (name === 'phoneNumber') {
+      // Only allow numbers
+      const numbersOnly = value.replace(/[^0-9]/g, '');
+      
+      // Validate length
+      if (numbersOnly.length > 10) {
+        setPhoneError('Phone number must be exactly 10 digits');
+        return;
+      } else {
+        setPhoneError('');
+      }
+      
+      setFormData(prev => ({ ...prev, [name]: numbersOnly }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate phone number length
+    if (formData.phoneNumber.length !== 10) {
+      setPhoneError('Phone number must be exactly 10 digits');
+      return;
+    }
+    
     try {
-      await axios.post('http://localhost:8080/api/employees', formData);
+      await axios.post('http://localhost:8080/api/employees', {
+        ...formData,
+        position: '', // Empty since we removed from form
+        salary: 0     // Default value since we removed from form
+      });
       alert('Employee registered successfully!');
       navigate('/admin');
     } catch (error) {
@@ -135,33 +163,12 @@ export default function Employees() {
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleChange}
+                maxLength={10}
+                pattern="[0-9]{10}"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Position</label>
-              <input
-                type="text"
-                name="position"
-                value={formData.position}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Salary</label>
-              <input
-                type="number"
-                name="salary"
-                value={formData.salary}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
+              {phoneError && <p className="text-red-500 text-xs mt-1">{phoneError}</p>}
             </div>
             
             <div>
