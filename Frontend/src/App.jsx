@@ -11,6 +11,7 @@ import Employees_View from './pages/Employees_View';
 import Employee_Update from './pages/Employee_Update';
 import Sign_in from './pages/Sign_in';
 import Employee_profile from './pages/Employee_profile';
+import Employee_ticket from './pages/Employee_ticket';
 
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/employees/edit/:id" element={<Employee_Update />} />
         <Route path="/Sign_in" element={<Sign_in />} />
         <Route path="/Employee_profile" element={<Employee_profile />} />
+        <Route path="/Employee_ticket" element={<Employee_ticket />} />
       </Routes>
       <Footer />
     </BrowserRouter>
