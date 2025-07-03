@@ -18,13 +18,14 @@ public class EmployeeModel {
     private String email;
     private String phoneNumber;
     private LocalDate hireDate;
+      private double salary;
 
     // Constructors
     public EmployeeModel() {}
 
     public EmployeeModel(String firstName, String lastName, LocalDate dateOfBirth, 
                         String department, String employeeId, String email, 
-                        String phoneNumber, LocalDate hireDate) {
+                        String phoneNumber, LocalDate hireDate, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -33,6 +34,7 @@ public class EmployeeModel {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
+        this.salary = salary;
     }
 
     // Getters and Setters (removed position and salary)
@@ -106,5 +108,13 @@ public class EmployeeModel {
 
     public void setHireDate(LocalDate hireDate) {
         this.hireDate = hireDate;
+    }
+
+     public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 }

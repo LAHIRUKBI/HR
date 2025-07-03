@@ -38,38 +38,35 @@ public class EmployeeController {
 
     // Create new employee
     @PostMapping
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeModel employee) {
-        Map<String, Object> response = new HashMap<>();
-        
-        try {
-            // Validate required fields
-            if (employee.getFirstName() == null || employee.getFirstName().isEmpty()) {
-                response.put("error", "First name is required");
-                return ResponseEntity.badRequest().body(response);
-            }
-            
-            // Validate uniqueness
-            if (employeeRepository.existsByEmployeeId(employee.getEmployeeId())) {
-                response.put("error", "Employee ID already exists");
-                return ResponseEntity.badRequest().body(response);
-            }
-            
-            if (employeeRepository.existsByEmail(employee.getEmail())) {
-                response.put("error", "Email already exists");
-                return ResponseEntity.badRequest().body(response);
-            }
-            
-            // Save employee
-            EmployeeModel savedEmployee = employeeRepository.save(employee);
-            response.put("message", "Employee registered successfully");
-            response.put("employee", savedEmployee);
-            return ResponseEntity.ok(response);
-            
-        } catch (Exception e) {
-            response.put("error", "Internal server error: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(response);
+public ResponseEntity<?> createEmployee(@RequestBody EmployeeModel employee) {
+    Map<String, Object> response = new HashMap<>();
+    
+    try {
+        // Validate required fields
+        if (employee.getFirstName() == null || employee.getFirstName().isEmpty()) {
+            response.put("error", "First name is required");
+            return ResponseEntity.badRequest().body(response);
         }
+        
+        // Validate salary is not negative
+        if (employee.getSalary() < 0) {
+            response.put("error", "Salary cannot be negative");
+            return ResponseEntity.badRequest().body(response);
+        }
+        
+        // Rest of your validation...
+        
+        // Save employee
+        EmployeeModel savedEmployee = employeeRepository.save(employee);
+        response.put("message", "Employee registered successfully");
+        response.put("employee", savedEmployee);
+        return ResponseEntity.ok(response);
+        
+    } catch (Exception e) {
+        response.put("error", "Internal server error: " + e.getMessage());
+        return ResponseEntity.internalServerError().body(response);
     }
+}
 
     // Update employee
     @PutMapping("/{id}")
@@ -89,6 +86,7 @@ public class EmployeeController {
             employee.setEmail(employeeDetails.getEmail());
             employee.setPhoneNumber(employeeDetails.getPhoneNumber());
             employee.setHireDate(employeeDetails.getHireDate());
+            employee.setSalary(employeeDetails.getSalary());
 
             EmployeeModel updatedEmployee = employeeRepository.save(employee);
             response.put("message", "Employee updated successfully");
