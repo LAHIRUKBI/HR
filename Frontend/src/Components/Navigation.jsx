@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Navigation() {
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [adminId, setAdminId] = useState('');
   const [error, setError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is logged in when component mounts
+    const employee = JSON.parse(localStorage.getItem('employee'));
+    if (employee) {
+      setIsLoggedIn(true);
+      // Since we don't store email in localStorage, we might need to adjust this
+      // For now, I'll use employeeId as a placeholder
+      setUserEmail(employee.employeeId);
+    }
+  }, []);
 
   const handleAdminClick = (e) => {
     e.preventDefault();
@@ -25,6 +40,14 @@ export default function Navigation() {
 
   const handleLoginClick = () => {
     navigate('/Sign_in');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('employee');
+    setIsLoggedIn(false);
+    setUserEmail('');
+    toast.success('Logged out successfully');
+    navigate('/');
   };
 
   return (
@@ -45,7 +68,7 @@ export default function Navigation() {
               {/* Primary navigation */}
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 <Link 
-                  to="/dashboard" 
+                  to="/" 
                   className="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Dashboard
@@ -71,14 +94,28 @@ export default function Navigation() {
               </div>
             </div>
 
-            {/* Right side - Login button */}
+            {/* Right side - Login/User info */}
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
-              <button
-                onClick={handleLoginClick}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Login
-              </button>
+              {isLoggedIn ? (
+                <div className="flex items-center">
+                  <span className="mr-4 text-sm font-medium text-gray-700">
+                    {userEmail}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={handleLoginClick}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Login
+                </button>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -100,7 +137,7 @@ export default function Navigation() {
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
             <Link 
-              to="/dashboard" 
+              to="/" 
               className="bg-blue-50 border-blue-500 text-blue-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
             >
               Dashboard
@@ -123,12 +160,26 @@ export default function Navigation() {
             >
               Admin
             </button>
-            <button
-              onClick={handleLoginClick}
-              className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left"
-            >
-              Login
-            </button>
+            {isLoggedIn ? (
+              <>
+                <div className="px-4 py-2 text-sm text-gray-700">
+                  Logged in as: {userEmail}
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={handleLoginClick}
+                className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left"
+              >
+                Login
+              </button>
+            )}
           </div>
         </div>
       </nav>
