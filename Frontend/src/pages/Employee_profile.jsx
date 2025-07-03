@@ -159,19 +159,32 @@ const handleDownloadSlip = () => {
           
           {/* Additional actions */}
           <div className="mt-8 flex justify-end space-x-4">
-            <button
-              onClick={() => navigate('/')}
-              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Back to Dashboard
-            </button>
-            <button
-              onClick={handleDownloadSlip}
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Download Slip
-            </button>
-          </div>
+  <button
+    onClick={() => navigate('/')}
+    className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  >
+    Back to Dashboard
+  </button>
+  <button
+    onClick={() => navigate('/Employee_ticket', {
+      state: {
+        fullName: `${employeeData.firstName} ${employeeData.lastName}`,
+        email: employeeData.email,
+        employeeId: employeeData.employeeId
+      }
+    })}
+    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+  >
+    Send Ticket
+  </button>
+  <button
+    onClick={handleDownloadSlip}
+    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+  >
+    Download Slip
+  </button>
+</div>
+          
         </div>
       </div>
     </div>
