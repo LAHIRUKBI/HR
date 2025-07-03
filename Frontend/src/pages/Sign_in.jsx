@@ -53,7 +53,8 @@ export default function Sign_in() {
       firstName: data.employee.firstName,
       lastName: data.employee.lastName,
       department: data.employee.department,
-      employeeId: data.employee.employeeId
+      employeeId: data.employee.employeeId,
+      email: credentials.email
     };
     
     localStorage.setItem('employee', JSON.stringify(employeeData));
