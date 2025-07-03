@@ -22,41 +22,44 @@ export default function Department_Update() {
   const [error, setError] = useState('');
   const [employees, setEmployees] = useState([]);
 
-  useEffect(() => {
+ useEffect(() => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      console.log(`Fetching department with code: ${id}`);
       
-      const departmentResponse = await axios.get(`http://localhost:8080/api/departments/${id}`);
-      console.log('Department response:', departmentResponse);
-      
-      if (!departmentResponse.data) {
-        throw new Error('Department data is empty');
+      // Fetch department data
+      const [departmentResponse, employeesResponse] = await Promise.all([
+        axios.get(`http://localhost:8080/api/departments/${id}`),
+        axios.get('http://localhost:8080/api/employees')
+      ]);
+
+       console.log('Department response:', departmentResponse);
+
+      setEmployees(employeesResponse.data);
+
+      if (departmentResponse.data) {
+        const departmentData = departmentResponse.data;
+         console.log('Department data:', departmentData);
+        setFormData({
+          name: departmentData.name || '',
+          code: departmentData.code || '',
+          managerId: departmentData.managerId?.toString() || '', // Ensure string value
+          location: departmentData.location || '',
+          description: departmentData.description || '',
+          employeeIds: Array.isArray(departmentData.employeeIds) 
+            ? departmentData.employeeIds.map(id => id.toString()) // Convert to strings
+            : [],
+          budget: departmentData.budget || 0
+        });
       }
-
-      const departmentData = departmentResponse.data;
-      console.log('Received department data:', departmentData);
-      
-      setFormData({
-        name: departmentData.name || '',
-        code: departmentData.code || '',
-        managerId: departmentData.managerId || '',
-        location: departmentData.location || '',
-        description: departmentData.description || '',
-        employeeIds: Array.isArray(departmentData.employeeIds) ? departmentData.employeeIds : [],
-        budget: departmentData.budget || 0
-      });
-
-      // ... rest of the function
     } catch (err) {
       console.error('Error details:', {
         message: err.message,
         response: err.response?.data,
-        status: err.response?.status,
-        code: code
+        status: err.response?.status
       });
-      setError(`Failed to load department (Code: ${id}). Please check the code and try again.`);
+      setError(`Failed to load department data. ${err.response?.data?.message || err.message}`);
+    } finally {
       setLoading(false);
     }
   };
@@ -75,10 +78,16 @@ export default function Department_Update() {
     setFormData(prev => ({ ...prev, [name]: numericValue }));
   };
 
-  const handleEmployeeSelection = (e) => {
-    const selectedEmployees = Array.from(e.target.selectedOptions, option => option.value);
-    setFormData(prev => ({ ...prev, employeeIds: selectedEmployees }));
-  };
+const handleEmployeeSelection = (e) => {
+  const options = e.target.options;
+  const selectedEmployees = [];
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].selected) {
+      selectedEmployees.push(options[i].value);
+    }
+  }
+  setFormData(prev => ({ ...prev, employeeIds: selectedEmployees }));
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();

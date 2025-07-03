@@ -25,17 +25,21 @@ export default function DepartmentList() {
     fetchDepartments();
   }, []);
 
-  const handleDelete = async (code) => {
-    if (window.confirm('Are you sure you want to delete this department?')) {
-      try {
-        await axios.delete(`http://localhost:8080/api/departments/${id}`);
-        setDepartments(departments.filter(dept => dept._id!== id));
-      } catch (err) {
-        setError('Failed to delete department');
-        console.error('Error deleting department:', err);
+const handleDelete = async (id) => {
+  if (window.confirm('Are you sure you want to delete this department?')) {
+    try {
+      const response = await axios.delete(`http://localhost:8080/api/departments/${id}`);
+      if (response.status === 200) {
+        setDepartments(departments.filter(dept => dept._id !== id));
+      } else {
+        setError(response.data?.error || 'Failed to delete department');
       }
+    } catch (err) {
+      console.error('Delete error:', err.response?.data || err.message);
+      setError(err.response?.data?.error || 'Failed to delete department');
     }
-  };
+  }
+};
 
   const filteredDepartments = departments.filter(dept =>
     dept.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -103,7 +107,7 @@ export default function DepartmentList() {
 <button
   onClick={() => {
     console.log('Editing department with ID:', dept._id);
-    navigate(`/departments/edit/${dept._id}`);  // Use _id instead of code
+    navigate(`/departments/edit/${dept._id}`);
   }}
   className="text-blue-500 hover:text-blue-700 transition-colors"
   title="Edit"

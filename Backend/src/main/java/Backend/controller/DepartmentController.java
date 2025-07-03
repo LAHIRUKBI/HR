@@ -29,20 +29,14 @@ public class DepartmentController {
 // Get single department by code
 @GetMapping("/{id}")
 public ResponseEntity<?> getDepartmentById(@PathVariable String id) {
-    System.out.println("Received request for department code: " + id);
+    System.out.println("Fetching department with ID: " + id);
+    Optional<DepartmentModel> department = departmentRepository.findById(id);
     
-    if (id == null || id.isEmpty()) {
-        System.out.println("Invalid code received");
-        return ResponseEntity.badRequest().body("Department code cannot be empty");
-    }
-    
-    DepartmentModel department = departmentRepository.findByCode(id);
-    
-    if (department != null) {
-        System.out.println("Found department: " + department.getName());
-        return ResponseEntity.ok(department);
+    if (department.isPresent()) {
+        System.out.println("Found department: " + department.get());
+        return ResponseEntity.ok(department.get());
     } else {
-        System.out.println("No department found with code: " + id);
+        System.out.println("Department not found");
         return ResponseEntity.notFound().build();
     }
 }
@@ -88,16 +82,36 @@ public ResponseEntity<?> createDepartment(@RequestBody DepartmentModel departmen
     }
 
 
-// Update department
-@PutMapping("/{code}")
-public ResponseEntity<?> updateDepartment(@PathVariable String code, @RequestBody DepartmentModel departmentDetails) {
+// Delete department
+@DeleteMapping("/{id}")
+public ResponseEntity<?> deleteDepartment(@PathVariable String id) {
     Map<String, Object> response = new HashMap<>();
     try {
-        DepartmentModel department = departmentRepository.findByCode(code);
-        if (department == null) {
+        if (!departmentRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        departmentRepository.deleteById(id);
+        response.put("message", "Department deleted successfully");
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        response.put("error", "Failed to delete department: " + e.getMessage());
+        return ResponseEntity.internalServerError().body(response);
+    }
+}
+
+
+// Update department by ID
+@PutMapping("/{id}")
+public ResponseEntity<?> updateDepartment(@PathVariable String id, @RequestBody DepartmentModel departmentDetails) {
+    Map<String, Object> response = new HashMap<>();
+    try {
+        Optional<DepartmentModel> departmentOptional = departmentRepository.findById(id);
+        if (!departmentOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
+        DepartmentModel department = departmentOptional.get();
         department.setName(departmentDetails.getName());
         department.setCode(departmentDetails.getCode());
         department.setManagerId(departmentDetails.getManagerId());
@@ -111,27 +125,7 @@ public ResponseEntity<?> updateDepartment(@PathVariable String code, @RequestBod
         response.put("department", updatedDepartment);
         return ResponseEntity.ok(response);
     } catch (Exception e) {
-        response.put("error", "Internal server error: " + e.getMessage());
-        return ResponseEntity.internalServerError().body(response);
-    }
-}
-
-
-// Delete department
-@DeleteMapping("/{code}")
-public ResponseEntity<?> deleteDepartment(@PathVariable String code) {
-    Map<String, Object> response = new HashMap<>();
-    try {
-        DepartmentModel department = departmentRepository.findByCode(code);
-        if (department == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        departmentRepository.delete(department);
-        response.put("message", "Department deleted successfully");
-        return ResponseEntity.ok(response);
-    } catch (Exception e) {
-        response.put("error", "Internal server error: " + e.getMessage());
+        response.put("error", "Failed to update department: " + e.getMessage());
         return ResponseEntity.internalServerError().body(response);
     }
 }
