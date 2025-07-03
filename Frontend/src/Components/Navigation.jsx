@@ -23,6 +23,10 @@ export default function Navigation() {
     }
   };
 
+  const handleLoginClick = () => {
+    navigate('/Sign_in');
+  };
+
   return (
     <>
       <nav className="bg-white shadow-sm border-b border-gray-200">
@@ -67,21 +71,14 @@ export default function Navigation() {
               </div>
             </div>
 
-            {/* Right side - User profile */}
+            {/* Right side - Login button */}
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
-              <div className="ml-3 relative">
-                <div className="flex items-center">
-                  <span className="mr-3 text-sm font-medium text-gray-700">John Doe</span>
-                  <div className="relative">
-                    <img 
-                      className="h-8 w-8 rounded-full border-2 border-blue-100" 
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
-                      alt="User profile"
-                    />
-                    <span className="absolute -bottom-1 -right-1 bg-green-400 rounded-full h-3 w-3"></span>
-                  </div>
-                </div>
-              </div>
+              <button
+                onClick={handleLoginClick}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Login
+              </button>
             </div>
 
             {/* Mobile menu button */}
@@ -126,21 +123,12 @@ export default function Navigation() {
             >
               Admin
             </button>
-          </div>
-          <div className="pt-4 pb-3 border-t border-gray-200">
-            <div className="flex items-center px-4">
-              <div className="flex-shrink-0">
-                <img 
-                  className="h-10 w-10 rounded-full" 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
-                  alt="User profile"
-                />
-              </div>
-              <div className="ml-3">
-                <div className="text-base font-medium text-gray-800">John Doe</div>
-                <div className="text-sm font-medium text-gray-500">HR Manager</div>
-              </div>
-            </div>
+            <button
+              onClick={handleLoginClick}
+              className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left"
+            >
+              Login
+            </button>
           </div>
         </div>
       </nav>
