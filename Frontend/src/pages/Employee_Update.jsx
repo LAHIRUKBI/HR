@@ -47,6 +47,20 @@ export default function Employee_Update() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    // Special handling for phone number to only allow digits and limit to 10 characters
+    if (name === 'phoneNumber') {
+      // Remove all non-digit characters
+      const digitsOnly = value.replace(/\D/g, '');
+      // Limit to 10 digits
+      const limitedDigits = digitsOnly.slice(0, 10);
+      setEmployee(prev => ({
+        ...prev,
+        [name]: limitedDigits
+      }));
+      return;
+    }
+    
     setEmployee(prev => ({
       ...prev,
       [name]: value
@@ -170,7 +184,7 @@ export default function Employee_Update() {
               </select>
             </div>
 
-            {/* Date of Birth */}
+            {/* Date of Birth - Readonly */}
             <div>
               <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">
                 Date of Birth
@@ -180,12 +194,12 @@ export default function Employee_Update() {
                 id="dateOfBirth"
                 name="dateOfBirth"
                 value={employee.dateOfBirth}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
               />
             </div>
 
-            {/* Hire Date */}
+            {/* Hire Date - Readonly */}
             <div>
               <label htmlFor="hireDate" className="block text-sm font-medium text-gray-700 mb-1">
                 Hire Date
@@ -195,8 +209,8 @@ export default function Employee_Update() {
                 id="hireDate"
                 name="hireDate"
                 value={employee.hireDate}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                readOnly
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
               />
             </div>
 
@@ -216,10 +230,10 @@ export default function Employee_Update() {
               />
             </div>
 
-            {/* Phone Number */}
+            {/* Phone Number - Digits only */}
             <div className="md:col-span-2">
               <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                Phone Number
+                Phone Number (10 digits)
               </label>
               <input
                 type="tel"
@@ -227,36 +241,42 @@ export default function Employee_Update() {
                 name="phoneNumber"
                 value={employee.phoneNumber}
                 onChange={handleChange}
+                pattern="[0-9]{10}"
+                maxLength="10"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="1234567890"
               />
+              {employee.phoneNumber && employee.phoneNumber.length !== 10 && (
+                <p className="mt-1 text-sm text-red-600">Phone number must be 10 digits</p>
+              )}
             </div>
           </div>
 
           <div className="md:col-span-2">
-  <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
-    Salary *
-  </label>
-  <div className="relative rounded-md shadow-sm">
-    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <span className="text-gray-500 sm:text-sm">$</span>
-    </div>
-    <input
-      type="number"
-      id="salary"
-      name="salary"
-      value={employee.salary}
-      onChange={handleChange}
-      required
-      min="0"
-      step="0.01"
-      className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      placeholder="0.00"
-    />
-    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-      <span className="text-gray-500 sm:text-sm">USD</span>
-    </div>
-  </div>
-</div>
+            <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
+              Salary *
+            </label>
+            <div className="relative rounded-md shadow-sm">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">$</span>
+              </div>
+              <input
+                type="number"
+                id="salary"
+                name="salary"
+                value={employee.salary}
+                onChange={handleChange}
+                required
+                min="0"
+                step="0.01"
+                className="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="0.00"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm">USD</span>
+              </div>
+            </div>
+          </div>
 
           <div className="mt-8 flex justify-end space-x-3">
             <button
