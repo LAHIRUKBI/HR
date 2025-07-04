@@ -60,6 +60,12 @@ export default function Admin() {
       action: () => navigate('/Ticket_All_View'),
       color: "from-blue-500 to-blue-600"
     },
+    {
+      title: "Managers",
+      description: "Managers Manage",
+      action: () => navigate('/Manager_Register'),
+      color: "from-blue-500 to-blue-600"
+    }
   ];
 
   if (loading) {

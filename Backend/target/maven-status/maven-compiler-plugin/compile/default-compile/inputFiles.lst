@@ -1,10 +1,13 @@
 G:\Project\HR\Backend\src\main\java\Backend\BackendApplication.java
 G:\Project\HR\Backend\src\main\java\Backend\controller\DepartmentController.java
 G:\Project\HR\Backend\src\main\java\Backend\controller\EmployeeController.java
+G:\Project\HR\Backend\src\main\java\Backend\controller\RoleController.java
 G:\Project\HR\Backend\src\main\java\Backend\controller\TicketController.java
 G:\Project\HR\Backend\src\main\java\Backend\model\DepartmentModel.java
 G:\Project\HR\Backend\src\main\java\Backend\model\EmployeeModel.java
+G:\Project\HR\Backend\src\main\java\Backend\model\Role.java
 G:\Project\HR\Backend\src\main\java\Backend\model\TicketModel.java
 G:\Project\HR\Backend\src\main\java\Backend\repository\DepartmentRepository.java
 G:\Project\HR\Backend\src\main\java\Backend\repository\EmployeeRepository.java
+G:\Project\HR\Backend\src\main\java\Backend\repository\RoleRepository.java
 G:\Project\HR\Backend\src\main\java\Backend\repository\TicketRepository.java

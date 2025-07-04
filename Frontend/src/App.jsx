@@ -17,6 +17,7 @@ import Department_Update from './pages/Department_Update';
 import Ticket_Create from './pages/Ticket_Create';
 import Ticket_View from './pages/Ticket_View';
 import Ticket_All_View from './pages/Ticket_All_View';
+import Manager_Register from './pages/Manager_Register';
 
 
 export default function App() {
@@ -42,6 +43,8 @@ export default function App() {
         <Route path="/Ticket_Create" element={<Ticket_Create />} />
         <Route path="/Ticket_View" element={<Ticket_View />} />
         <Route path="/Ticket_All_View" element={<Ticket_All_View />} />
+
+        <Route path="/Manager_Register" element={<Manager_Register />} />
         
 
       </Routes>
