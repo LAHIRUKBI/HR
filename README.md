@@ -1,71 +1,60 @@
 # HRPro - Human Resources Management System
 
-![HRPro Logo](https://via.placeholder.com/150x50?text=HRPro) 
-![MERN Stack](https://img.shields.io/badge/MERN-Stack-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+A modern Human Resources Management solution built to streamline employee, department, and role management.
+---
 
-A modern HR management solution built with the MERN stack (MongoDB, Express.js, React, Node.js) to streamline employee, department, and role management.
+## Tech Stack
+- **Fron-end**: React
+- **Back-end**: Spring Boot
+- **Databases**: MongoDB
 
-## Table of Contents
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Screenshots](#screenshots)
-- [License](#license)
-- [Contributing](#contributing)
-- [Support](#support)
+---
 
-## Features
-
-### Employee Management
-- 📝 Create and manage employee profiles
-- 🔍 Search and filter employees
-- 📊 Performance tracking
-- 📅 Leave management
-
-### Department Management
-- 🏢 Department creation and hierarchy
-- 💰 Budget allocation tracking
-- 👥 Team assignment
-- 📈 Department analytics
-
-### Role Management
-- 👔 Define roles and designations
-- 🔐 Role-based access control
-- ⚙️ Permission management
-- 📋 Position hierarchy visualization
-
-## Technology Stack
-
-**Frontend:**
-- React.js
-- Redux (State management)
-- React Router (Navigation)
-- Axios (HTTP client)
-- Tailwind CSS (Styling)
-- React Icons
-
-**Backend:**
-- Node.js
-- Express.js
-- MongoDB (Database)
-- Mongoose (ODM)
-- JSON Web Tokens (Authentication)
-- Bcrypt (Password hashing)
-
-## Installation
+## Installation and Setup
 
 ### Prerequisites
-- Node.js (v14 or later)
-- MongoDB (v4.4 or later)
-- Git (for version control)
 
-### Setup Instructions
+1. Ensure that **java version "23.0.2"** is installed on your device. You can download **Java JDK** [here](https://www.oracle.com/java/technologies/downloads/).
+2. Now let's install it and create the Environment variable as **JAVA_HOME**.
+3. For that, go to the place where you installed java **(C:\Program Files\Java\jdk-23)** and copy its path.
+4. Then go to Edit the System environment variables > Environment variables and create it as **JAVA_HOME** under User variable and put the file path you copied for that
+5. Do the same for System variables
+6. Now take cmd and type **java -version** there and make sure that Java is installed correctly
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/hrpro.git
-cd hrpro
+### Backend Setup
+
+1. Navigate to the backend directory of the project:  
+   ```bash
+   cd backend
+
+2. Start the backend:  
+   ```bash
+   mvn spring-boot:run
+
+### Frontend Setup
+
+1. Navigate to the frontend directory of the project.  
+   ```bash
+   cd frontend
+
+2. Install dependencies:  
+   ```bash
+   npm install
+
+3. Start the frontend:  
+   ```bash
+   npm run dev
+
+## How to flow this web app
+
+First, activate both the **frontend** and the **backend**. When it is done correctly, the link to the website on the frontend will be displayed. By doing so, you can access the website.
+
+**As a Administrator,**
+
+Now the home page of the web application appears. To log in as the Admin user, click the **Admin** button in the navigation bar. Then, enter **"23054"** as the password in the popup box that appears and log in. This person is the one who can add employees to the system and do everything else.
+
+---
+
+**As a Employee,**
+
+To log in as an employee, you must have registered in the system. This is done by the Admin. Then you will be given an email and an ID. You can use it to log in to the system using the Login button on the navigation bar. Then you can send your details and your requests to the Admin.
