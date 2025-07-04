@@ -59,8 +59,12 @@ export default function Manager_Views() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-          <h1 className="text-2xl font-bold text-gray-800">All Roles</h1>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Role Management</h1>
+            <p className="text-gray-600">View and manage all system roles and permissions</p>
+          </div>
           <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4">
             <div className="relative w-full">
               <input
@@ -97,57 +101,53 @@ export default function Manager_Views() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {roles.map((role) => (
               <div key={role.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
-                {/* Image section - full width with proper aspect ratio */}
-                <div className="w-full h-64 bg-gray-100 overflow-hidden relative">
+                {/* Title Section - Above Image */}
+                <div className="px-6 pt-6 pb-4 bg-gradient-to-r from-blue-50 to-blue-100">
+                  <h2 className="text-xl font-bold text-gray-800 truncate">{role.title}</h2>
+                </div>
+
+                {/* Image section - Updated to show complete image */}
+                <div className="w-full h-48 bg-gray-100 flex items-center justify-center overflow-hidden relative">
                   {role.imageUrl ? (
-                    <img
-                      src={role.imageUrl}
-                      alt={role.title}
-                      className="w-full h-full object-cover absolute inset-0"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '';
-                        e.target.parentElement.innerHTML = (
-                          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                            <FaUser className="text-gray-500 text-6xl" />
-                          </div>
-                        );
-                      }}
-                    />
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img
+                        src={role.imageUrl}
+                        alt={role.title}
+                        className="max-w-full max-h-full object-contain"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '';
+                          e.target.parentElement.innerHTML = (
+                            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                              <FaUser className="text-gray-500 text-5xl" />
+                            </div>
+                          );
+                        }}
+                      />
+                    </div>
                   ) : (
                     <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                      <FaUser className="text-gray-500 text-6xl" />
+                      <FaUser className="text-gray-500 text-5xl" />
                     </div>
                   )}
                 </div>
 
+                {/* Name display under image */}
+                {role.name && (
+                  <div className="px-6 py-3 bg-white border-b border-gray-100">
+                    <div className="flex items-center justify-center">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                        {role.name}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Content section */}
                 <div className="p-6 flex-grow flex flex-col">
-                  <div className="mb-4">
-                    <h2 className="text-xl font-semibold text-gray-800">{role.title}</h2>
-                    {role.name && (
-                      <p className="text-gray-600 mt-1">{role.name}</p>
-                    )}
-                  </div>
-
                   <div className="mb-4 flex-grow">
-                    <h3 className="text-sm font-medium text-gray-500 mb-1">Description</h3>
+                    <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Description</h3>
                     <p className="text-gray-700">{role.description}</p>
-                  </div>
-                  
-
-                  <div className="mb-4">
-                    <h3 className="text-sm font-medium text-gray-500 mb-1">Permissions</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {role.permissions?.map((permission, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-800"
-                        >
-                          {permission.replace(/_/g, ' ')}
-                        </span>
-                      ))}
-                    </div>
                   </div>
 
                   <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
