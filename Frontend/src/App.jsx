@@ -13,6 +13,7 @@ import Sign_in from './pages/Sign_in';
 import Employee_profile from './pages/Employee_profile';
 import DepartmentForm from './pages/DepartmentForm';
 import DepartmentList from './pages/DepartmentList';
+import Department_Update from './pages/Department_Update';
 
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
 
         <Route path="/DepartmentForm" element={<DepartmentForm />} />
         <Route path="/DepartmentList" element={<DepartmentList />} />
+        <Route path="/Department_Update/:id" element={<Department_Update />} />
         
 
       </Routes>

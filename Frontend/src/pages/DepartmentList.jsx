@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaSearch, FaUsers, FaMoneyBillWave, FaMapMarkerAlt, FaUserTie } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaSearch, FaUsers, FaMoneyBillWave, FaMapMarkerAlt, FaUserTie } from 'react-icons/fa';
 
 export default function DepartmentList() {
   const navigate = useNavigate();
@@ -87,6 +87,13 @@ export default function DepartmentList() {
                       <h2 className="text-lg font-semibold text-gray-800">{dept.name}</h2>
                       <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">Code: {dept.code}</p>
                     </div>
+                    <button
+    onClick={() => navigate(`/Department_Update/${dept.id}`)}
+    className="text-blue-500 hover:text-blue-700 transition-colors"
+    title="Edit"
+  >
+    <FaEdit />
+  </button>
                   </div>
 
                   <div className="mt-4 space-y-3">
@@ -135,6 +142,7 @@ export default function DepartmentList() {
                     </div>
                   )}
                 </div>
+
               </div>
             ))}
           </div>

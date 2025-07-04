@@ -65,5 +65,54 @@ public ResponseEntity<?> createDepartment(@RequestBody DepartmentModel departmen
         }
     }
 
+
+    // Get single department by ID
+@GetMapping("/{id}")
+public ResponseEntity<?> getDepartmentById(@PathVariable String id) {
+    System.out.println("Received request for department ID: " + id);
+    try {
+        if (id == null || id.equals("undefined")) {
+            System.out.println("Invalid department ID received");
+            return ResponseEntity.badRequest().body("Invalid department ID");
+        }
+        
+        Optional<DepartmentModel> department = departmentRepository.findById(id);
+        if (department.isPresent()) {
+            System.out.println("Department found: " + department.get());
+            return ResponseEntity.ok(department.get());
+        } else {
+            System.out.println("Department not found for ID: " + id);
+            return ResponseEntity.notFound().build();
+        }
+    } catch (Exception e) {
+        System.out.println("Error fetching department: " + e.getMessage());
+        return ResponseEntity.internalServerError().body("Error fetching department");
+    }
+}
+
+// Update department by ID
+@PutMapping("/{id}")
+public ResponseEntity<?> updateDepartment(@PathVariable String id, @RequestBody DepartmentModel departmentDetails) {
+    try {
+        Optional<DepartmentModel> departmentOptional = departmentRepository.findById(id);
+        if (!departmentOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        DepartmentModel department = departmentOptional.get();
+        department.setName(departmentDetails.getName());
+        department.setCode(departmentDetails.getCode());
+        department.setManagerId(departmentDetails.getManagerId());
+        department.setLocation(departmentDetails.getLocation());
+        department.setDescription(departmentDetails.getDescription());
+        department.setEmployeeIds(departmentDetails.getEmployeeIds());
+        department.setBudget(departmentDetails.getBudget());
+
+        DepartmentModel updatedDepartment = departmentRepository.save(department);
+        return ResponseEntity.ok(updatedDepartment);
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().body("Failed to update department");
+    }
+}
     
 }
