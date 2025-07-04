@@ -105,10 +105,7 @@ const handleDelete = async (id) => {
                     </div>
                     <div className="flex space-x-3">
 <button
-  onClick={() => {
-    console.log('Editing department with ID:', dept._id);
-    navigate(`/departments/edit/${dept._id}`);
-  }}
+  onClick={() => navigate(`/departments/edit/${dept._id}`)}
   className="text-blue-500 hover:text-blue-700 transition-colors"
   title="Edit"
 >
