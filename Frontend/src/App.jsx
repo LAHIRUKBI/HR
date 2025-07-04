@@ -19,6 +19,8 @@ import Ticket_View from './pages/Ticket_View';
 import Ticket_All_View from './pages/Ticket_All_View';
 import Manager_Register from './pages/Manager_Register';
 import Manager_Views from './pages/Manager_Views';
+import Employee_Home from './pages/Employee_Home';
+import Department_Home from './pages/Department_Home';
 
 
 export default function App() {
@@ -31,6 +33,10 @@ export default function App() {
         <Route path="/Sign_up" element={<Sign_up />} />
         <Route path="/Role" element={<Role />} />
         <Route path="/Admin" element={<Admin />} />
+
+        <Route path="/Employee_Home" element={<Employee_Home />} />
+        <Route path="/Department_Home" element={<Department_Home />} />
+
         <Route path="/Employees" element={<Employees />} />
         <Route path="/Employees_View" element={<Employees_View />} />
         <Route path="/employees/edit/:id" element={<Employee_Update />} />
