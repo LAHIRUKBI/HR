@@ -1,10 +1,11 @@
-# HRpro
+# HRpro- Human Resources Management System
 
+A modern human resources management solution built to streamline employee, department, and role management.
 ---
 
 ## Tech Stack
 
-- **Front-end**: REACT
+- **Front-end**: React
 - **Back-end**: Spring boot
 - **Data base**: MongoDB
 
