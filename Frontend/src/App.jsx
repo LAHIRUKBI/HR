@@ -18,6 +18,7 @@ import Ticket_Create from './pages/Ticket_Create';
 import Ticket_View from './pages/Ticket_View';
 import Ticket_All_View from './pages/Ticket_All_View';
 import Manager_Register from './pages/Manager_Register';
+import Manager_Views from './pages/Manager_Views';
 
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/Ticket_All_View" element={<Ticket_All_View />} />
 
         <Route path="/Manager_Register" element={<Manager_Register />} />
+        <Route path="/Manager_Views" element={<Manager_Views />} />
         
 
       </Routes>

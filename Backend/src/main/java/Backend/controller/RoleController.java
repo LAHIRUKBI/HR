@@ -55,4 +55,25 @@ public class RoleController {
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
+
+
+
+    // Add to RoleController.java
+@GetMapping("/search")
+public List<Role> searchRoles(@RequestParam(required = false) String title) {
+    if (title != null && !title.isEmpty()) {
+        return roleRepository.findByTitleContainingIgnoreCase(title);
+    }
+    return roleRepository.findAll();
+}
+
+@DeleteMapping("/{id}")
+public ResponseEntity<?> deleteRole(@PathVariable String id) {
+    try {
+        roleRepository.deleteById(id);
+        return ResponseEntity.ok().body("Role deleted successfully");
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().body("Failed to delete role");
+    }
+}
 }
