@@ -6,6 +6,7 @@ import { FaImage, FaUserTie } from 'react-icons/fa';
 export default function Manager_Register() {
   const [formData, setFormData] = useState({
     title: '',
+    name: '',
     description: '',
     permissions: []
   });
@@ -32,6 +33,7 @@ export default function Manager_Register() {
     
     const data = new FormData();
     data.append('title', formData.title);
+    data.append('name', formData.name);
     data.append('description', formData.description);
     data.append('permissions', JSON.stringify(formData.permissions));
     if (image) data.append('image', image);
@@ -85,6 +87,21 @@ export default function Manager_Register() {
                 placeholder="e.g., HR Manager"
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
+                required
+              />
+            </div>
+            {/* Name */}
+            <div>
+              <label className="flex items-center gap-2 text-gray-700 font-medium mb-2">
+                <FaUserTie className="text-blue-500" />
+                Name
+              </label>
+              <input
+                type="text"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., Name"
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
                 required
               />
             </div>

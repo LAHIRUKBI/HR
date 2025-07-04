@@ -9,6 +9,7 @@ public class Role {
     @Id
     private String id;
     private String title;
+    private String name;
     private String description;
     private String imageUrl; // Stores the path to the image
     private List<String> permissions;
@@ -16,8 +17,9 @@ public class Role {
     // Constructors
     public Role() {}
 
-    public Role(String title, String description, String imageUrl, List<String> permissions) {
+    public Role(String title, String name, String description, String imageUrl, List<String> permissions) {
         this.title = title;
+        this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
         this.permissions = permissions;
@@ -27,6 +29,8 @@ public class Role {
     public String getId() { return id; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
+    public String getName() { return name; }
+    public void getName(String name) { this.name = name; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
     public String getImageUrl() { return imageUrl; }
