@@ -171,6 +171,18 @@ export default function Employee_profile() {
             >
               Download Slip
             </button>
+            <button
+    onClick={() => navigate('/Ticket_Create', {
+      state: {
+        fullName: `${employeeData.firstName} ${employeeData.lastName}`,
+        employeeId: employeeData.employeeId,
+        email: employeeData.email
+      }
+    })}
+    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+  >
+    Send Ticket
+  </button>
           </div>
         </div>
       </div>
