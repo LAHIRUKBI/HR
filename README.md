@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 # HRPro - Human Resources Management System
 
 A modern Human Resources Management solution built to streamline employee, department, and role management.
@@ -8,7 +12,11 @@ A modern Human Resources Management solution built to streamline employee, depar
 - **Fron-end**: React
 - **Back-end**: Spring Boot
 - **Databases**: MongoDB
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 # HRpro- Human Resources Management System
 
 A modern human resources management solution built to streamline employee, department, and role management.
@@ -19,7 +27,11 @@ A modern human resources management solution built to streamline employee, depar
 - **Front-end**: React
 - **Back-end**: Spring boot
 - **Data base**: MongoDB
+<<<<<<< HEAD
+>>>>>>> 1979674f2e9e6c8d3e7d7ce86366c56f51836424
+=======
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 
 ---
 
@@ -27,19 +39,31 @@ A modern human resources management solution built to streamline employee, depar
 
 ### Prerequisites
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 1. Ensure that **java version "23.0.2"** is installed on your device. You can download **Java JDK** [here](https://www.oracle.com/java/technologies/downloads/).
 2. Now let's install it and create the Environment variable as **JAVA_HOME**.
 3. For that, go to the place where you installed java **(C:\Program Files\Java\jdk-23)** and copy its path.
 4. Then go to Edit the System environment variables > Environment variables and create it as **JAVA_HOME** under User variable and put the file path you copied for that
 5. Do the same for System variables
 6. Now take cmd and type **java -version** there and make sure that Java is installed correctly
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 1. Ensure that **Java jdk** is installed on your device. You can download **Java jdk** [here](https://nodejs.org](https://www.oracle.com/java/technologies/downloads/ ).
 2. setup **environment variables**
 
 ---
+<<<<<<< HEAD
+>>>>>>> 1979674f2e9e6c8d3e7d7ce86366c56f51836424
+=======
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 
 ### Backend Setup
 
@@ -51,9 +75,18 @@ A modern human resources management solution built to streamline employee, depar
    ```bash
    mvn spring-boot:run
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> 1979674f2e9e6c8d3e7d7ce86366c56f51836424
+=======
+
+
+
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 ### Frontend Setup
 
 1. Navigate to the frontend directory of the project.  
@@ -64,24 +97,48 @@ A modern human resources management solution built to streamline employee, depar
    ```bash
    npm install
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+3. Start the frontend:  
+=======
+3. Start the backend server:  
+>>>>>>> 1979674f2e9e6c8d3e7d7ce86366c56f51836424
+=======
 
 3. Start the frontend:  
 
 3. Start the backend server:  
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
    ```bash
    npm run dev
 
 ## How to flow this web app
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1979674f2e9e6c8d3e7d7ce86366c56f51836424
+=======
 
 
 
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 First, activate both the **frontend** and the **backend**. When it is done correctly, the link to the website on the frontend will be displayed. By doing so, you can access the website.
 
 **As a Administrator,**
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+Now the home page of the web application appears. To log in as the Admin user, click the **Admin** button in the navigation bar. Then, enter **"23054"** as the password in the popup box that appears and log in. This person is the one who can add employees to the system and do everything else.
+
+---
+=======
+Now the home page of the web application appears. To log in as an Admin user, click the Admin button on the navigation bar. Then enter "23054" as the password in the popup box and log in. This is the only one who can add employees to the system and do everything else.
+>>>>>>> 1979674f2e9e6c8d3e7d7ce86366c56f51836424
+=======
 
 Now the home page of the web application appears. To log in as the Admin user, click the **Admin** button in the navigation bar. Then, enter **"23054"** as the password in the popup box that appears and log in. This person is the one who can add employees to the system and do everything else.
 
@@ -89,6 +146,7 @@ Now the home page of the web application appears. To log in as the Admin user, c
 
 Now the home page of the web application appears. To log in as an Admin user, click the Admin button on the navigation bar. Then enter "23054" as the password in the popup box and log in. This is the only one who can add employees to the system and do everything else.
 
+>>>>>>> 281a3790a31750059e9364452037283ecb61637d
 
 **As a Employee,**
 
