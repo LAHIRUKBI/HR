@@ -25,6 +25,18 @@ export default function Ticket_All_View() {
     fetchTickets();
   }, []);
 
+  const handleDelete = async (ticketId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/tickets/${ticketId}`);
+      toast.success('Ticket deleted successfully');
+      // Remove the deleted ticket from the local state
+      setTickets(tickets.filter(ticket => ticket.id !== ticketId));
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Failed to delete ticket');
+      console.error('Error deleting ticket:', error);
+    }
+  };
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString();
   };
@@ -65,6 +77,7 @@ export default function Ticket_All_View() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -106,6 +119,14 @@ export default function Ticket_All_View() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {formatDate(ticket.createdAt)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => handleDelete(ticket.id)}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}
