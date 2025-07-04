@@ -70,13 +70,13 @@ export default function Navigation() {
                   Dashboard
                 </Link>
                 <Link 
-                  to="/emplo" 
+                  to="/Employee_Home" 
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Employees
                 </Link>
                 <Link 
-                  to="/departments" 
+                  to="/Department_Home" 
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Departments

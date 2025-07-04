@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FaBuilding, FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
+import { FaBuilding, FaMapMarkerAlt, FaMoneyBillWave, FaUser } from 'react-icons/fa';
 
 export default function Home() {
   const [departments, setDepartments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [roles, setRoles] = useState([]);
+  const [loadingDepts, setLoadingDepts] = useState(true);
+  const [loadingRoles, setLoadingRoles] = useState(true);
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -14,13 +16,28 @@ export default function Home() {
         // Get top 3 departments with highest budgets
         const sortedDepts = response.data.sort((a, b) => b.budget - a.budget).slice(0, 3);
         setDepartments(sortedDepts);
-        setLoading(false);
+        setLoadingDepts(false);
       } catch (err) {
         console.error('Error fetching departments:', err);
-        setLoading(false);
+        setLoadingDepts(false);
       }
     };
+
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/roles/all');
+        // Get top 3 roles
+        const topRoles = response.data.slice(0, 3);
+        setRoles(topRoles);
+        setLoadingRoles(false);
+      } catch (error) {
+        console.error('Error fetching roles:', error);
+        setLoadingRoles(false);
+      }
+    };
+
     fetchDepartments();
+    fetchRoles();
   }, []);
 
   return (
@@ -30,20 +47,6 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Welcome to HRPro</h1>
           <p className="text-xl md:text-2xl mb-8">Empowering Your Organization's Success</p>
-          <div className="space-x-4">
-            <Link 
-              to="/employees" 
-              className="inline-block px-6 py-3 bg-white text-blue-600 font-medium rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
-            >
-              Manage Employees
-            </Link>
-            <Link 
-              to="/departments" 
-              className="inline-block px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300"
-            >
-              View Departments
-            </Link>
-          </div>
         </div>
       </div>
 
@@ -55,7 +58,7 @@ export default function Home() {
             These departments represent the pillars of our organization's success
           </p>
           
-          {loading ? (
+          {loadingDepts ? (
             <div className="text-center py-8">Loading departments...</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -95,8 +98,77 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Features Section */}
+      {/* Featured Roles Section */}
       <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">Key Organizational Roles</h2>
+          <p className="text-xl text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+            These roles define the structure and responsibilities within our organization
+          </p>
+          
+          {loadingRoles ? (
+            <div className="text-center py-8">Loading roles...</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {roles.map((role, index) => (
+                <div 
+                  key={role.id} 
+                  className={`bg-gradient-to-br rounded-xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-105 ${index % 3 === 0 ? 'from-blue-50 to-blue-100' : index % 3 === 1 ? 'from-purple-50 to-purple-100' : 'from-teal-50 to-teal-100'}`}
+                >
+                  <div className="p-6">
+                    <h2 className="text-2xl font-bold ml-3 text-gray-800">{role.title}</h2>
+                    <div className="flex items-center mb-4">
+                      {/* Image section */}
+                                      <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative">
+                                        {role.imageUrl ? (
+                                          <div className="w-full h-full flex items-center justify-center">
+                                            <img
+                                              src={role.imageUrl}
+                                              alt={role.title}
+                                              className="max-w-full max-h-full object-contain"
+                                              onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = '';
+                                                e.target.parentElement.innerHTML = (
+                                                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                                    <FaUser className="text-gray-500 text-5xl" />
+                                                  </div>
+                                                );
+                                              }}
+                                            />
+                                          </div>
+                                        ) : (
+                                          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                            <FaUser className="text-gray-500 text-5xl" />
+                                          </div>
+                                        )}
+                                      </div>
+                      
+                    </div>
+
+                    {/* Name display */}
+                    {role.name && (
+                      <div className="mb-4">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${index % 3 === 0 ? 'bg-blue-100 text-blue-800' : index % 3 === 1 ? 'bg-purple-100 text-purple-800' : 'bg-teal-100 text-teal-800'}`}>
+                          {role.name}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="mb-6">
+                      <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Description</h3>
+                      <p className="text-gray-700">{role.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Key Features</h2>
           
@@ -130,16 +202,15 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">Document Management</h3>
-              <p className="text-gray-600">Securely store and access important HR documents and employee files.</p>
+              <h3 className="text-xl font-semibold mb-2 text-gray-800">Role Management</h3>
+              <p className="text-gray-600">Define and manage organizational roles with clear responsibilities and permissions.</p>
             </div>
           </div>
         </div>
       </div>
 
-
       {/* Call to Action */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">Ready to transform your HR operations?</h2>
           <p className="text-xl text-gray-600 mb-8">Join thousands of companies who trust HRPro for their human resource management needs.</p>
