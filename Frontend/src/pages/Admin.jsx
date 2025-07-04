@@ -62,9 +62,15 @@ export default function Admin() {
     },
     {
       title: "Managers",
-      description: "Managers Manage",
+      description: "Managers Register",
       action: () => navigate('/Manager_Register'),
-      color: "from-blue-500 to-blue-600"
+      color: "from-teal-500 to-teal-600"
+    },
+    {
+      title: "Managers View",
+      description: "Managers View",
+      action: () => navigate('/Manager_Views'),
+      color: "from-indigo-500 to-indigo-600"
     }
   ];
 
