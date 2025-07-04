@@ -49,82 +49,111 @@ export default function Ticket_Create() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white shadow rounded-lg overflow-hidden">
-        <div className="bg-purple-600 px-6 py-4">
-          <h1 className="text-2xl font-bold text-white">
-            Create Support Ticket
-          </h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-lg mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">Support Ticket</h1>
+          <p className="mt-2 text-gray-600">Submit your issue or request</p>
         </div>
-        
-        <div className="px-6 py-4">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                readOnly
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Employee ID</label>
-              <input
-                type="text"
-                name="employeeId"
-                value={formData.employeeId}
-                readOnly
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                readOnly
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Message <span className="text-gray-500">({50 - formData.message.length} characters remaining)</span>
-              </label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                maxLength={50}
-                rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="Describe your issue (max 50 characters)"
-              />
-            </div>
-            
-            <div className="flex justify-end space-x-4 pt-4">
-              <button
-                type="button"
-                onClick={() => navigate('/')}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={loading || !formData.message}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 disabled:opacity-50"
-              >
-                {loading ? 'Sending...' : 'Send Ticket'}
-              </button>
-            </div>
-          </form>
+
+        <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4">
+            <h2 className="text-xl font-semibold text-white">Create New Ticket</h2>
+          </div>
+
+          <div className="px-6 py-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 gap-6">
+                {/* Read-only Info Cards */}
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                        Full Name
+                      </label>
+                      <p className="text-sm font-medium text-gray-800">
+                        {formData.fullName}
+                      </p>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                        Employee ID
+                      </label>
+                      <p className="text-sm font-medium text-gray-800">
+                        {formData.employeeId}
+                      </p>
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                        Email
+                      </label>
+                      <p className="text-sm font-medium text-gray-800">
+                        {formData.email}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Message Field */}
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Your Message
+                    <span className="ml-2 text-xs text-gray-500 font-normal">
+                      ({50 - formData.message.length} characters remaining)
+                    </span>
+                  </label>
+                  <div className="mt-1 relative rounded-md shadow-sm">
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      className="block w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                      placeholder="Briefly describe your issue (max 50 characters)"
+                      value={formData.message}
+                      onChange={handleChange}
+                      maxLength={50}
+                      required
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-gray-400">
+                      {formData.message.length}/50
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end space-x-4 pt-4">
+                <button
+                  type="button"
+                  onClick={() => navigate('/')}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading || !formData.message}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-75"
+                >
+                  {loading ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing...
+                    </>
+                  ) : (
+                    'Submit Ticket'
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div className="mt-6 text-center text-sm text-gray-500">
+          <p>Our support team will respond to your ticket within 24 hours.</p>
         </div>
       </div>
     </div>

@@ -58,4 +58,18 @@ public ResponseEntity<?> getTicketsByEmployeeId(@PathVariable String employeeId)
         return ResponseEntity.internalServerError().body(response);
     }
 }
+
+
+@GetMapping
+public ResponseEntity<?> getAllTickets() {
+    Map<String, Object> response = new HashMap<>();
+    try {
+        List<TicketModel> tickets = ticketRepository.findAll();
+        response.put("tickets", tickets);
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        response.put("error", "Failed to fetch tickets: " + e.getMessage());
+        return ResponseEntity.internalServerError().body(response);
+    }
+}
 }
