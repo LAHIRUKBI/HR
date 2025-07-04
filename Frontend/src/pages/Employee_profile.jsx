@@ -183,6 +183,16 @@ export default function Employee_profile() {
   >
     Send Ticket
   </button>
+   <button
+    onClick={() => navigate('/Ticket_View', {
+      state: {
+        employeeId: employeeData.employeeId
+      }
+    })}
+    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+  >
+    Ticket View
+  </button>
           </div>
         </div>
       </div>

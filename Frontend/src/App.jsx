@@ -15,6 +15,7 @@ import DepartmentForm from './pages/DepartmentForm';
 import DepartmentList from './pages/DepartmentList';
 import Department_Update from './pages/Department_Update';
 import Ticket_Create from './pages/Ticket_Create';
+import Ticket_View from './pages/Ticket_View';
 
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/Department_Update/:id" element={<Department_Update />} />
 
         <Route path="/Ticket_Create" element={<Ticket_Create />} />
+        <Route path="/Ticket_View" element={<Ticket_View />} />
         
 
       </Routes>
