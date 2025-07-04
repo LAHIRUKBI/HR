@@ -53,7 +53,8 @@ First, activate both the **frontend** and the **backend**. When it is done corre
 
 **As a Administrator,**
 
+Now the home page of the web application appears. To log in as an Admin user, click the Admin button on the navigation bar. Then enter "23054" as the password in the popup box and log in. This is the only one who can add employees to the system and do everything else.
 
 **As a Employee,**
 
-
+To log in as an employee, you must have registered in the system. This is done by the Admin. Then you will be given an email and an ID. You can use it to log in to the system using the Login button on the navigation bar. Then you can send your details and your requests to the Admin.
