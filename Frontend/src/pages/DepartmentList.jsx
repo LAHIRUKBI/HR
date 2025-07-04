@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaEdit, FaTrash, FaPlus, FaSearch, FaUsers, FaMoneyBillWave, FaMapMarkerAlt, FaUserTie } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaUsers, FaMoneyBillWave, FaMapMarkerAlt, FaUserTie } from 'react-icons/fa';
 
 export default function DepartmentList() {
   const navigate = useNavigate();
@@ -24,22 +24,6 @@ export default function DepartmentList() {
     };
     fetchDepartments();
   }, []);
-
-const handleDelete = async (id) => {
-  if (window.confirm('Are you sure you want to delete this department?')) {
-    try {
-      const response = await axios.delete(`http://localhost:8080/api/departments/${id}`);
-      if (response.status === 200) {
-        setDepartments(departments.filter(dept => dept._id !== id));
-      } else {
-        setError(response.data?.error || 'Failed to delete department');
-      }
-    } catch (err) {
-      console.error('Delete error:', err.response?.data || err.message);
-      setError(err.response?.data?.error || 'Failed to delete department');
-    }
-  }
-};
 
   const filteredDepartments = departments.filter(dept =>
     dept.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -102,22 +86,6 @@ const handleDelete = async (id) => {
                     <div>
                       <h2 className="text-lg font-semibold text-gray-800">{dept.name}</h2>
                       <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">Code: {dept.code}</p>
-                    </div>
-                    <div className="flex space-x-3">
-<button
-  onClick={() => navigate(`/departments/edit/${dept._id}`)}
-  className="text-blue-500 hover:text-blue-700 transition-colors"
-  title="Edit"
->
-  <FaEdit />
-</button>
-                      <button
-                        onClick={() => handleDelete(dept._id)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
-                        title="Delete"
-                      >
-                        <FaTrash />
-                      </button>
                     </div>
                   </div>
 
