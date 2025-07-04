@@ -33,56 +33,30 @@ export default function Admin() {
     {
       title: "Manage Employees",
       description: "Add, edit, or remove employee records",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      ),
       action: () => navigate('/employees'),
       color: "from-blue-500 to-blue-600"
     },
     {
       title: "View Employees",
       description: "Browse and search employee database",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-        </svg>
-      ),
       action: () => navigate('/Employees_View'),
       color: "from-indigo-500 to-indigo-600"
     },
     {
       title: "Manage Departments",
       description: "Create and organize departments",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-        </svg>
-      ),
       action: () => navigate('/DepartmentForm'),
       color: "from-green-500 to-green-600"
     },
     {
       title: "View Departments",
       description: "See all departments and their details",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      ),
       action: () => navigate('/DepartmentList'),
       color: "from-teal-500 to-teal-600"
     },
     {
       title: "Tickets Views",
       description: "View Employees Support Tickest",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      ),
       action: () => navigate('/Ticket_All_View'),
       color: "from-blue-500 to-blue-600"
     },
@@ -115,9 +89,6 @@ export default function Admin() {
             >
               <div className="p-6 text-white">
                 <div className="flex items-start">
-                  <div className="bg-white bg-opacity-20 p-3 rounded-xl mr-4">
-                    {item.icon}
-                  </div>
                   <div>
                     <h2 className="text-xl font-semibold mb-1">{item.title}</h2>
                     <p className="text-white text-opacity-80 text-sm">{item.description}</p>
