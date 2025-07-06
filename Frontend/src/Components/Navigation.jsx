@@ -93,21 +93,39 @@ export default function Navigation() {
             {/* Right side - Login/User info */}
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
               {isLoggedIn ? (
-                <div className="flex items-center">
-                  <button 
-                    onClick={() => navigate('/Employee_profile')}
-                    className="mr-4 text-sm font-medium text-gray-700 hover:text-blue-600 cursor-pointer"
-                  >
-                    {userEmail}
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
+  <div className="flex items-center">
+    <button 
+      onClick={() => navigate('/Employee_profile')}
+      className="mr-4 text-sm font-medium text-gray-700 hover:text-blue-600 cursor-pointer"
+    >
+      {userEmail}
+    </button>
+    <button
+      onClick={handleLogout}
+      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+    >
+      Logout
+    </button>
+  </div>
+) : localStorage.getItem('manager') ? (
+  <div className="flex items-center">
+    <button 
+      onClick={() => navigate('/Manager_Profile')}
+      className="mr-4 text-sm font-medium text-gray-700 hover:text-blue-600 cursor-pointer"
+    >
+      {JSON.parse(localStorage.getItem('manager')).email}
+    </button>
+    <button
+      onClick={() => {
+        localStorage.removeItem('manager');
+        window.location.reload();
+      }}
+      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+    >
+      Logout
+    </button>
+  </div>
+) : (
                 <button
                   onClick={handleLoginClick}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
