@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RoleRepository extends MongoRepository<Role, String> {
     List<Role> findByTitleContainingIgnoreCase(String title);
+    Role findByEmail(String email);
 }
