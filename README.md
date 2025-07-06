@@ -15,17 +15,26 @@ A modern Human Resources Management solution built to streamline employee, depar
 
 ### Prerequisites
 
-1. Ensure that **java version "23.0.2"** is installed on your device. You can download **Java JDK** [here](https://www.oracle.com/java/technologies/downloads/).
-2. Now let's install it and create the Environment variable as **JAVA_HOME**.
-3. For that, go to the place where you installed java **(C:\Program Files\Java\jdk-23)** and copy its path.
-4. Then go to Edit the System environment variables > Environment variables and create it as **JAVA_HOME** under User variable and put the file path you copied for that
-5. Do the same for System variables
-6. Now take cmd and type **java -version** there and make sure that Java is installed correctly
+1. Download Java JDK 23.0.2  [here](https://www.oracle.com/java/technologies/downloads/)
 
+       🔴Get the installer from Oracle's website
 
+       🔴Run the installer and note the installation location (usually C:\Program Files\Java\jdk-23.0.2)
 
-1. Ensure that **Java jdk** is installed on your device. You can download **Java jdk** [here](https://nodejs.org](https://www.oracle.com/java/technologies/downloads/ ).
-2. setup **environment variables**
+2. Set JAVA_HOME Environment Variable
+
+       🔴Press Windows + S and search for "Environment Variables"
+
+       🔴Click "Edit the system environment variables"
+
+       🔴In the System Properties window, click "Environment Variables..."
+
+       🔴Under "System variables" (not user variables), click "New"
+
+               ✔ Variable name: JAVA_HOME
+
+               ✔ Variable value: C:\Program Files\Java\jdk-23.0.2 (or your actual install path)
+
 
 
 ### Backend Setup
