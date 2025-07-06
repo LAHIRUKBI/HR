@@ -21,36 +21,37 @@ public class RoleController {
     private final String uploadDir = "G:/Project/HR/Backend/uploads/roles/";
 
 @PostMapping("/create")
-    public ResponseEntity<?> createRole(
-            @RequestParam("title") String title,
-            @RequestParam("name") String name,
-            @RequestParam("description") String description,
-            @RequestParam(value = "image", required = false) MultipartFile image
-            ) {
+public ResponseEntity<?> createRole(
+        @RequestParam("title") String title,
+        @RequestParam("name") String name,
+        @RequestParam("description") String description,
+        @RequestParam("email") String email,
+        @RequestParam("password") String password,
+        @RequestParam(value = "image", required = false) MultipartFile image) {
 
-        try {
-            String imageUrl = null;
+    try {
+        String imageUrl = null;
+        
+        // Handle image upload
+        if (image != null && !image.isEmpty()) {
+            File folder = new File(uploadDir);
+            if (!folder.exists()) folder.mkdirs();
             
-            // Handle image upload
-            if (image != null && !image.isEmpty()) {
-                File folder = new File(uploadDir);
-                if (!folder.exists()) folder.mkdirs();
-                
-                String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-                File destination = new File(uploadDir + fileName);
-                image.transferTo(destination);
-                imageUrl = "http://localhost:8080/uploads/roles/" + fileName;
-            }
-
-            Role role = new Role(title, name, description, imageUrl);
-            Role savedRole = roleRepository.save(role);
-            
-            return ResponseEntity.ok(savedRole);
-            
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().body("Failed to upload image: " + e.getMessage());
+            String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+            File destination = new File(uploadDir + fileName);
+            image.transferTo(destination);
+            imageUrl = "http://localhost:8080/uploads/roles/" + fileName;
         }
+
+        Role role = new Role(title, name, description, imageUrl, email, password);
+        Role savedRole = roleRepository.save(role);
+        
+        return ResponseEntity.ok(savedRole);
+        
+    } catch (IOException e) {
+        return ResponseEntity.internalServerError().body("Failed to upload image: " + e.getMessage());
     }
+}
 
 @GetMapping("/all")
     public List<Role> getAllRoles() {

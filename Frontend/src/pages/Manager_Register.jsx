@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaImage, FaUserTie } from 'react-icons/fa';
+import { FaImage, FaUserTie, FaEnvelope, FaLock } from 'react-icons/fa';
 
 export default function Manager_Register() {
   const [formData, setFormData] = useState({
     title: '',
     name: '',
     description: '',
+    email: '',
+    password: ''
   });
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -23,10 +25,18 @@ export default function Manager_Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Basic validation
+    if (!formData.email && formData.password) {
+      toast.error('Please enter an email if setting a password');
+      return;
+    }
+
     const data = new FormData();
     data.append('title', formData.title);
     data.append('name', formData.name);
     data.append('description', formData.description);
+    data.append('email', formData.email);
+    data.append('password', formData.password);
     if (image) data.append('image', image);
 
     try {
@@ -38,7 +48,13 @@ export default function Manager_Register() {
       
       toast.success('Role created successfully!');
       // Reset form
-      setFormData({ title: '', name: '', description: '' });
+      setFormData({ 
+        title: '', 
+        name: '', 
+        description: '',
+        email: '',
+        password: ''
+      });
       setImage(null);
       setPreview(null);
       
@@ -72,6 +88,7 @@ export default function Manager_Register() {
                 required
               />
             </div>
+            
             {/* Name */}
             <div>
               <label className="flex items-center gap-2 text-gray-700 font-medium mb-2">
@@ -125,6 +142,39 @@ export default function Manager_Register() {
                   />
                 </div>
               )}
+            </div>
+
+            {/* Login Credentials */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-gray-800">Login Credentials</h3>
+              
+              <div>
+                <label className="flex items-center gap-2 text-gray-700 font-medium mb-2">
+                  <FaEnvelope className="text-blue-500" />
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="e.g., manager@company.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                />
+              </div>
+              
+              <div>
+                <label className="flex items-center gap-2 text-gray-700 font-medium mb-2">
+                  <FaLock className="text-blue-500" />
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Set a password (optional)"
+                  value={formData.password}
+                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                />
+              </div>
             </div>
 
             {/* Submit Button */}

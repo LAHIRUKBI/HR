@@ -21,6 +21,7 @@ import Manager_Register from './pages/Manager_Register';
 import Manager_Views from './pages/Manager_Views';
 import Employee_Home from './pages/Employee_Home';
 import Department_Home from './pages/Department_Home';
+import Manager_Signin from './pages/Manager_Signin';
 
 
 export default function App() {
@@ -53,7 +54,7 @@ export default function App() {
 
         <Route path="/Manager_Register" element={<Manager_Register />} />
         <Route path="/Manager_Views" element={<Manager_Views />} />
-        
+        <Route path="/Manager_Signin" element={<Manager_Signin />} />
 
       </Routes>
       <Footer />
