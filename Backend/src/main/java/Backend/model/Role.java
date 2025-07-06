@@ -12,17 +12,17 @@ public class Role {
     private String name;
     private String description;
     private String imageUrl; // Stores the path to the image
-    private List<String> permissions;
+    
 
     // Constructors
     public Role() {}
 
-    public Role(String title, String name, String description, String imageUrl, List<String> permissions) {
+    public Role(String title, String name, String description, String imageUrl) {
         this.title = title;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.permissions = permissions;
+        
     }
 
     // Getters and Setters
@@ -35,6 +35,4 @@ public class Role {
     public void setDescription(String description) { this.description = description; }
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-    public List<String> getPermissions() { return permissions; }
-    public void setPermissions(List<String> permissions) { this.permissions = permissions; }
 }
