@@ -20,13 +20,13 @@ public class RoleController {
 
     private final String uploadDir = "G:/Project/HR/Backend/uploads/roles/";
 
-    @PostMapping("/create")
+@PostMapping("/create")
     public ResponseEntity<?> createRole(
             @RequestParam("title") String title,
             @RequestParam("name") String name,
             @RequestParam("description") String description,
-            @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam("permissions") List<String> permissions) {
+            @RequestParam(value = "image", required = false) MultipartFile image
+            ) {
 
         try {
             String imageUrl = null;
@@ -42,7 +42,7 @@ public class RoleController {
                 imageUrl = "http://localhost:8080/uploads/roles/" + fileName;
             }
 
-            Role role = new Role(title, name, description, imageUrl, permissions);
+            Role role = new Role(title, name, description, imageUrl);
             Role savedRole = roleRepository.save(role);
             
             return ResponseEntity.ok(savedRole);
@@ -52,7 +52,7 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/all")
+@GetMapping("/all")
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }

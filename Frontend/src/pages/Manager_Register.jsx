@@ -8,17 +8,9 @@ export default function Manager_Register() {
     title: '',
     name: '',
     description: '',
-    permissions: []
   });
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-
-  const permissionsList = [
-    "manage_employees",
-    "approve_leave",
-    "view_reports",
-    "manage_payroll"
-  ];
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -35,7 +27,6 @@ export default function Manager_Register() {
     data.append('title', formData.title);
     data.append('name', formData.name);
     data.append('description', formData.description);
-    data.append('permissions', JSON.stringify(formData.permissions));
     if (image) data.append('image', image);
 
     try {
@@ -47,22 +38,13 @@ export default function Manager_Register() {
       
       toast.success('Role created successfully!');
       // Reset form
-      setFormData({ title: '', description: '', permissions: [] });
+      setFormData({ title: '', name: '', description: '' });
       setImage(null);
       setPreview(null);
       
     } catch (error) {
       toast.error('Failed to create role: ' + (error.response?.data || error.message));
     }
-  };
-
-  const togglePermission = (permission) => {
-    setFormData(prev => ({
-      ...prev,
-      permissions: prev.permissions.includes(permission)
-        ? prev.permissions.filter(p => p !== permission)
-        : [...prev.permissions, permission]
-    }));
   };
 
   return (
@@ -143,28 +125,6 @@ export default function Manager_Register() {
                   />
                 </div>
               )}
-            </div>
-
-            {/* Permissions */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">
-                Permissions
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {permissionsList.map(permission => (
-                  <label key={permission} className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={formData.permissions.includes(permission)}
-                      onChange={() => togglePermission(permission)}
-                      className="rounded text-blue-600"
-                    />
-                    <span className="text-sm capitalize">
-                      {permission.replace('_', ' ')}
-                    </span>
-                  </label>
-                ))}
-              </div>
             </div>
 
             {/* Submit Button */}
