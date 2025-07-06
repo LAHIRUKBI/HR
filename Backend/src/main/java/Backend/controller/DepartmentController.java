@@ -66,7 +66,7 @@ public ResponseEntity<?> createDepartment(@RequestBody DepartmentModel departmen
     }
 
 
-    // Get single department by ID
+// Get single department by ID
 @GetMapping("/{id}")
 public ResponseEntity<?> getDepartmentById(@PathVariable String id) {
     System.out.println("Received request for department ID: " + id);
@@ -112,6 +112,22 @@ public ResponseEntity<?> updateDepartment(@PathVariable String id, @RequestBody 
         return ResponseEntity.ok(updatedDepartment);
     } catch (Exception e) {
         return ResponseEntity.internalServerError().body("Failed to update department");
+    }
+}
+
+
+// Add this to your DepartmentController.java
+@DeleteMapping("/{id}")
+public ResponseEntity<?> deleteDepartment(@PathVariable String id) {
+    try {
+        if (!departmentRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        departmentRepository.deleteById(id);
+        return ResponseEntity.ok().body("Department deleted successfully");
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().body("Failed to delete department");
     }
 }
     

@@ -83,7 +83,7 @@ export default function DepartmentForm() {
       } else {
         await axios.post('http://localhost:8080/api/departments', formData);
       }
-      navigate('/departments');
+      navigate('/DepartmentList');
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to save department');
       setLoading(false);

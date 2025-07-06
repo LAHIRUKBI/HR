@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaEdit, FaSearch, FaUsers, FaMoneyBillWave, FaMapMarkerAlt, FaUserTie } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaSearch, FaUsers, FaMoneyBillWave, FaMapMarkerAlt, FaUserTie, FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function DepartmentList() {
   const navigate = useNavigate();
@@ -24,6 +26,17 @@ export default function DepartmentList() {
     };
     fetchDepartments();
   }, []);
+
+  const handleDelete = async (departmentId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/departments/${departmentId}`);
+      setDepartments(departments.filter(dept => dept._id !== departmentId));
+      toast.success('Department deleted successfully');
+    } catch (err) {
+      toast.error('Failed to delete department');
+      console.error('Error deleting department:', err);
+    }
+  };
 
   const filteredDepartments = departments.filter(dept =>
     dept.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -87,13 +100,22 @@ export default function DepartmentList() {
                       <h2 className="text-lg font-semibold text-gray-800">{dept.name}</h2>
                       <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">Code: {dept.code}</p>
                     </div>
-                    <button
-    onClick={() => navigate(`/Department_Update/${dept.id}`)}
-    className="text-blue-500 hover:text-blue-700 transition-colors"
-    title="Edit"
-  >
-    <FaEdit />
-  </button>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => navigate(`/Department_Update/${dept._id}`)}
+                        className="text-blue-500 hover:text-blue-700 transition-colors"
+                        title="Edit"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(dept.id)}
+                        className="text-red-500 hover:text-red-700 transition-colors"
+                        title="Delete"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
                   </div>
 
                   <div className="mt-4 space-y-3">
@@ -142,7 +164,6 @@ export default function DepartmentList() {
                     </div>
                   )}
                 </div>
-
               </div>
             ))}
           </div>
