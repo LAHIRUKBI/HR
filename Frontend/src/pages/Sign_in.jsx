@@ -167,9 +167,14 @@ export default function Sign_in() {
             </div>
           </form>
 
-          {/* Optional footer */}
-          <div className="mt-6 text-center text-sm text-gray-500">
-            <p>Need help? Contact your HR department</p>
+          {/* Manager Signin Link */}
+          <div className="mt-6 text-center">
+            <button 
+              onClick={() => navigate('/Manager_Signin')}
+              className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+            >
+              Manager Signin
+            </button>
           </div>
         </div>
       </div>
