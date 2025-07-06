@@ -9,19 +9,6 @@ A modern Human Resources Management solution built to streamline employee, depar
 - **Back-end**: Spring Boot
 - **Databases**: MongoDB
 
-# HRpro- Human Resources Management System
-
-A modern human resources management solution built to streamline employee, department, and role management.
----
-
-## Tech Stack
-
-- **Front-end**: React
-- **Back-end**: Spring boot
-- **Data base**: MongoDB
-
----
-
 ## Installation and Setup
 
 ### Prerequisites
